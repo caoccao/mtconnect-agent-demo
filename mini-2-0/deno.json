@@ -1,5 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --watch robot.ts"
+    "dev": "deno run --allow-net --watch robot.ts",
+    "check": "deno check robot.ts"
   }
 }

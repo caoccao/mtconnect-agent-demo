@@ -1,4 +1,6 @@
-# Mini Stream 2.0
+# Mini 2.0
+
+This is a mini demo supporting 2.0. It connects to an MQTT broker at localhost:1883 if that broker is running.
 
 ## Demo
 

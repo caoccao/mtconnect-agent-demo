@@ -13,7 +13,7 @@ async function handleConnection(conn: Deno.Conn) {
     } else {
       const requestText = textDecoder.decode(buffer.slice(0, bytesRead))
       let responseText: string;
-      console.debug(`Request: ${requestText}`)
+      console.debug(`Request: ${requestText.trimEnd()}`)
       if (requestText === "* PING\n") {
         responseText = "* PONG 1000"
         console.debug(`Response: ${responseText}`)
@@ -29,6 +29,7 @@ async function handleConnection(conn: Deno.Conn) {
       responseText = events.join("|")
       console.debug(`Response: ${responseText}`)
       await conn.write(textEncoder.encode(`${responseText}\n`))
+      console.debug("")
     }
   }
   conn.close()

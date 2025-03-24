@@ -1,14 +1,16 @@
-# Mini 2.0
+# Mini MQTT
 
-This is a mini demo supporting 2.0. It connects to an MQTT broker at localhost:1883 if that broker is running.
+This is a mini demo supporting MQTT. It connects to an MQTT broker at localhost:1883 if that broker is running.
 
 ## Demo
 
 - Start the agent and the robot in 2 separate terminals.
 
 ```sh
-# Start the agent.
-agent debug
+# Start the agent for 1.3.
+agent debug agent-1-3.cfg
+# Start the agent for 2.0.
+agent debug agent-2-0.cfg
 # Start the robot.
 deno run dev
 ```

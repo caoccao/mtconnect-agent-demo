@@ -9,6 +9,17 @@
       <DataItems>
         <DataItem category="EVENT" id="RobotAvail" type="AVAILABILITY" name="avail"/>
       </DataItems>
+      <Components>
+        <Controller id="controller" name="controller">
+          <Components>
+            <Path id="path" name="path">
+              <DataItems>
+                <DataItem category="SAMPLE" id="RobotPosition" name="position" type="ACTUATION_COUNT"/>
+              </DataItems>
+            </Path>
+          </Components>
+        </Controller>
+      </Components>
     </Device>
   </Devices>
 </MTConnectDevices>

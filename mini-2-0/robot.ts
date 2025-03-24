@@ -3,7 +3,8 @@ const AVAILABILITY = ["AVAILABLE", "UNAVAILABLE"]
 async function handleConnection(conn: Deno.Conn) {
   const textEncoder = new TextEncoder()
   const textDecoder = new TextDecoder()
-  const buffer = new Uint8Array(1024)
+  const buffer = new Uint8Array(4096)
+  let position = 0
   while (true) {
     const bytesRead = await conn.read(buffer)
     if (bytesRead === null) {
@@ -11,16 +12,23 @@ async function handleConnection(conn: Deno.Conn) {
       break
     } else {
       const requestText = textDecoder.decode(buffer.slice(0, bytesRead))
+      let responseText: string;
       console.debug(`Request: ${requestText}`)
-      const responseTexts: string[] = []
       if (requestText === "* PING\n") {
-        responseTexts.push("* PONG 5000")
+        responseText = "* PONG 1000"
+        console.debug(`Response: ${responseText}`)
+        await conn.write(textEncoder.encode(`${responseText}\n`))
       }
-      const now = new Date()
-      responseTexts.push(`${now.toISOString()}|${AVAILABILITY[0]}`)
-      const responseText = responseTexts.join("\n") + "\n"
+      const events: string[] = [
+        new Date().toISOString(),
+        "avail",
+        AVAILABILITY[0],
+        "position",
+        `${position++}`,
+      ]
+      responseText = events.join("|")
       console.debug(`Response: ${responseText}`)
-      await conn.write(textEncoder.encode(responseText))
+      await conn.write(textEncoder.encode(`${responseText}\n`))
     }
   }
   conn.close()

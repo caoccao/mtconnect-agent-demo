@@ -36,6 +36,12 @@ deno run dev
 </DeviceStream>
 ```
 
+![Streams](../docs/images/mini-mqtt-01.png)
+
+- Open the [Agent](http://localhost:8000/) page in MetaStudio and you should see the similar data.
+
+![Streams](../docs/images/mini-mqtt-02.png)
+
 ## Links
 
 - [Devices](http://localhost:8000/)

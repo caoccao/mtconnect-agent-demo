@@ -42,6 +42,10 @@ deno run dev
 
 ![Streams](../docs/images/mini-mqtt-02.png)
 
+## Kubenetes
+
+This demo can be run in a Kubernetes cluster.
+
 ## Links
 
 - [Devices](http://localhost:8000/)

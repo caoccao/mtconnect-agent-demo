@@ -1,7 +1,7 @@
 # export DOCKER_DEFAULT_PLATFORM=linux/amd64
 # docker build -t sjtucaocao/mini-mqtt-agent:1.0 -f mini-mqtt/agent-2-0.Dockerfile .
 
-FROM mtconnect/agent:latest AS mtconnect_agent
+FROM mtconnect/agent:2.4 AS mtconnect_agent
 
 FROM ubuntu:24.04
 

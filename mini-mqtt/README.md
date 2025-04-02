@@ -52,6 +52,36 @@ This demo can be run in a Kubernetes cluster.
 kind delete cluster --name mtconnect
 kind create cluster --config cluster.yaml
 kubectl apply -f pods-services.yaml
+```
+
+- We shall see the following log.
+
+```sh
+Creating cluster "mtconnect" ...
+ ✓ Ensuring node image (kindest/node:v1.32.2) 🖼
+ ✓ Preparing nodes 📦 📦 📦 📦  
+ ✓ Writing configuration 📜 
+ ✓ Starting control-plane 🕹️ 
+ ✓ Installing CNI 🔌 
+ ✓ Installing StorageClass 💾 
+ ✓ Joining worker nodes 🚜 
+Set kubectl context to "kind-mtconnect"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-mtconnect
+
+Have a nice day! 👋
+pod/mtconnect-mqtt created
+service/app-mtconnect-mqtt created
+pod/mtconnect-agent created
+service/app-mtconnect-agent created
+pod/mtconnect-robot created
+service/app-mtconnect-robot created
+```
+
+- Wait a few seconds and run the following command to set up the port-forward.
+
+```sh
 kubectl port-forward service/app-mtconnect-mqtt 1883:1883 8080:8080
 ```
 
@@ -60,6 +90,8 @@ kubectl port-forward service/app-mtconnect-mqtt 1883:1883 8080:8080
 ```sh
 mqtt sub -t '#'
 ```
+
+![Kubernetes](../docs/images/mini-mqtt-03.png)
 
 ## Links
 

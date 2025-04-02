@@ -2,6 +2,9 @@
 
 FROM denoland/deno:latest
 
+RUN apt-get update -y
+RUN apt-get install -y iputils-ping telnet
+
 WORKDIR /
 RUN mkdir /demo
 

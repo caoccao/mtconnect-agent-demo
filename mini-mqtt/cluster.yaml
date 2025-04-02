@@ -1,0 +1,39 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: mtconnect
+
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+
+- role: worker
+  extraPortMappings:
+  - containerPort: 1883 # MQTT Port
+    hostPort: 1883
+    protocol: TCP
+  - containerPort: 8080 # MQTT Admin Port
+    hostPort: 8080
+    protocol: TCP
+  labels:
+    tier: mqtt
+
+- role: worker
+  extraPortMappings:
+  - containerPort: 7878 # MTConnect Adapter Port
+    hostPort: 7878
+    protocol: TCP
+  labels:
+    tier: robot
+
+- role: worker
+  extraPortMappings:
+  - containerPort: 8000 # MTConnect Agent Port
+    hostPort: 8000
+    protocol: TCP
+  labels:
+    tier: agent

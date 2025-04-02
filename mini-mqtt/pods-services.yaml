@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mtconnect-mqtt
+  namespace: default
+  labels:
+    app: mqtt
+spec:
+  hostname: mtconnect-mqtt
+  nodeSelector:
+    tier: mqtt
+  containers:
+  - image: hivemq/hivemq-edge:2025.4
+    name: mqtt
+    resources:
+      limits:
+        cpu: "1"
+        memory: "2Gi"
+    ports:
+    - name: mqtt
+      protocol: TCP
+      containerPort: 1883
+    - name: http
+      protocol: TCP
+      containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-mtconnect-mqtt
+  namespace: default
+spec:
+  selector:
+    app: mqtt
+  type: NodePort
+  ports:
+  - name: mqtt
+    port: 1883
+    targetPort: mqtt
+    protocol: TCP
+  - name: http
+    port: 8080
+    targetPort: http
+    protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mtconnect-agent
+  namespace: default
+  labels:
+    app: agent
+spec:
+  hostname: mtconnect-agent
+  nodeSelector:
+    tier: agent
+  containers:
+  - image: sjtucaocao/mini-mqtt-agent:1.0@sha256:145bc5135c47ee208af5df93622c124daacfd7426205f72ca92504790ebbde61
+    name: agent
+    resources:
+      limits:
+        cpu: "1"
+        memory: "256Mi"
+    ports:
+    - name: agent
+      protocol: TCP
+      containerPort: 8000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-mtconnect-agent
+  namespace: default
+spec:
+  selector:
+    app: agent
+  type: NodePort
+  ports:
+  - name: agent
+    port: 8000
+    targetPort: agent
+    protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mtconnect-robot
+  namespace: default
+  labels:
+    app: robot
+spec:
+  hostname: mtconnect-robot
+  nodeSelector:
+    tier: robot
+  containers:
+  - image: sjtucaocao/mini-mqtt-robot:1.0@sha256:ff2b880e162df8fdca9825f5a5aa43f52d0c7366d3f287654abb3413b0f267f7
+    name: robot
+    resources:
+      limits:
+        cpu: "1"
+        memory: "256Mi"
+    ports:
+    - name: robot
+      protocol: TCP
+      containerPort: 7878
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-mtconnect-robot
+  namespace: default
+spec:
+  selector:
+    app: robot
+  type: NodePort
+  ports:
+  - name: robot
+    port: 7878
+    targetPort: robot
+    protocol: TCP

@@ -46,6 +46,21 @@ deno run dev
 
 This demo can be run in a Kubernetes cluster.
 
+- Run the following commands to start the Kubernetes cluster.
+
+```sh
+kind delete cluster --name mtconnect
+kind create cluster --config cluster.yaml
+kubectl apply -f pods-services.yaml
+kubectl port-forward service/app-mtconnect-mqtt 1883:1883 8080:8080
+```
+
+- Subscribe the MQTT broker at `localhost:1883` and we shall see the MQTT messages.
+
+```sh
+mqtt sub -t '#'
+```
+
 ## Links
 
 - [Devices](http://localhost:8000/)
